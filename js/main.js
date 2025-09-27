@@ -312,3 +312,59 @@
     })();
 
 })(document.documentElement);
+const words = ["Growth", "Clarity", "Impact", "Success"];
+let i = 0;
+let j = 0;
+let currentWord = "";
+let isDeleting = false;
+const typerElement = document.getElementById("introTyper");
+
+function typeEffect() {
+  currentWord = words[i];
+  if (!isDeleting) {
+    typerElement.textContent = currentWord.substring(0, j + 1);
+    j++;
+    if (j === currentWord.length) {
+      isDeleting = true;
+      setTimeout(typeEffect, 1500); // pause before deleting
+      return;
+    }
+  } else {
+    typerElement.textContent = currentWord.substring(0, j - 1);
+    j--;
+    if (j === 0) {
+      isDeleting = false;
+      i = (i + 1) % words.length;
+    }
+  }
+  setTimeout(typeEffect, isDeleting ? 80 : 120);
+}
+
+document.addEventListener("DOMContentLoaded", typeEffect);
+document.querySelectorAll(".accordion-header").forEach(header => {
+  header.addEventListener("click", () => {
+    const item = header.parentElement;
+    const openItem = document.querySelector(".accordion-item.active");
+
+    if (openItem && openItem !== item) {
+      openItem.classList.remove("active");
+    }
+
+    item.classList.toggle("active");
+  });
+});
+const tabs = document.querySelectorAll(".tab-btn");
+const panels = document.querySelectorAll(".case-panel");
+
+tabs.forEach(tab => {
+  tab.addEventListener("click", () => {
+    tabs.forEach(btn => btn.classList.remove("active"));
+    tab.classList.add("active");
+
+    const target = tab.dataset.case;
+    panels.forEach(panel => {
+      panel.classList.remove("active");
+      if(panel.id === target) panel.classList.add("active");
+    });
+  });
+});
