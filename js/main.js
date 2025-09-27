@@ -368,3 +368,10 @@ tabs.forEach(tab => {
     });
   });
 });
+const menuToggle = document.querySelector('.s-header__menu-toggle');
+const nav = document.querySelector('.s-header__nav');
+
+menuToggle.addEventListener('click', (e) => {
+  e.preventDefault();
+  nav.classList.toggle('active');
+});
